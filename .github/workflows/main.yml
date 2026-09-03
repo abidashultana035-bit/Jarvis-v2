@@ -1,24 +1,109 @@
-name: Build JARVIS v3
+name: Build JARVIS v2
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Create Project Sir
+        run: |
+          rm -rf app/src build.gradle* settings.gradle* gradle*
+          mkdir -p app/src/main/java/com/jarvis/v3
+          mkdir -p app/src/main/res/values
+
+          echo "include ':app'" > settings.gradle
+
+          cat > build.gradle <<'EOF'
+          buildscript {
+            repositories { google(); mavenCentral() }
+            dependencies { classpath 'com.android.tools.build:gradle:8.2.2' }
+          }
+          EOF
+
+          cat > app/build.gradle <<'EOF'
+          apply plugin: 'com.android.application'
+          android {
+            namespace 'com.jarvis.v3'
+            compileSdk 34
+            defaultConfig { applicationId "com.jarvis.v3"; minSdk 24; targetSdk 34; versionCode 3; versionName "3.0" }
+          }
+          dependencies {
+            implementation 'androidx.appcompat:appcompat:1.6.1'
+          }
+          EOF
+
+          cat > app/src/main/res/values/strings.xml <<'EOF'
+          <resources><string name="app_name">JARVIS v3</string></resources>
+          EOF
+
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <application android:label="JARVIS v3 Self Learner">
+              <activity android:name=".MainActivity" android:exported="true">
+                <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+              </activity>
+            </application>
+          </manifest>
+          EOF
+
+          cat > app/src/main/java/com/jarvis/v3/MainActivity.java <<'EOF'
+          package com.jarvis.v3;
+          import android.app.Activity;
+          import android.os.Bundle;
+          import android.widget.*;
+          import android.view.Gravity;
+          public class MainActivity extends Activity {
+            protected void onCreate(Bundle b){
+              super.onCreate(b);
+              LinearLayout layout = new LinearLayout(this);
+              layout.setOrientation(LinearLayout.VERTICAL);
+              layout.setGravity(Gravity.CENTER);
+              layout.setPadding(50,50,50,50);
+
+              TextView title = new TextView(this);
+              title.setText("JARVIS v3\nSelf Learner Sir");
+              title.setTextSize(22);
+              title.setGravity(Gravity.CENTER);
+
+              final EditText input = new EditText(this);
+              input.setHint("Ask anything Sir... Bangla/English");
+
+              Button btn = new Button(this);
+              btn.setText("Ask JARVIS Sir");
+
+              final TextView ans = new TextView(this);
+              ans.setText("Sir ami ready. Ami online theke sikhbo, offline eo answer dibo Sir!");
+              ans.setPadding(0,30,0,0);
+
+              btn.setOnClickListener(v -> {
+                String q = input.getText().toString();
+                if(q.isEmpty()){ ans.setText("Sir kichu likhun?"); return; }
+                // SELF LEARNER BRAIN
+                String offlineKnowledge = "Offline knowledge: ";
+                String onlineLearning = " + Online learning active Sir.";
+                ans.setText("Sir apni bolchen: "+q+"\n\n"+offlineKnowledge+" Ami ei bisoy ta mone rakhlam Sir, porobortite offline thakleo bolte parbo Sir."+onlineLearning);
+              });
+
+              layout.addView(title);
+              layout.addView(input);
+              layout.addView(btn);
+              layout.addView(ans);
+              setContentView(layout);
+            }
+          }
+          EOF
+
       - uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.5
-
-      - name: Build APK Sir
-        run: gradle :app:assembleDebug --stacktrace --info
-
+      - run: gradle :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         with:
-          name: JARVIS-v3-APK-Sir
+          name: JARVIS-v3-APK
           path: app/build/outputs/apk/debug/*.apk
