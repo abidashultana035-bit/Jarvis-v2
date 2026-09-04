@@ -12,5 +12,5 @@ google()
 mavenCentral()
 }
 }
-rootProject.name = "Jarvis-v2"
+rootProject.name = "Jarvis-v3"
 include ':app'
