@@ -1,4 +1,4 @@
-name: Build JARVIS v2
+name: Build JARVIS v3
 on: [push]
 jobs:
   build:
