@@ -1,21 +1,33 @@
 package com.jarvis.v3.language;
+import android.os.AsyncTask;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import org.json.JSONObject;
+
 public class Translator {
-    public static String currentLang = "BN-EN"; // Default Bangla+English Sir
+    public static String currentLang = "bn"; // default Bangla
 
-    // Offline dictionary Sir + Online e Google Translate API use korbe Sir
-    public static String translate(String textSir, String toLang){
-        // Offline check
-        String offline = com.jarvis.v3.brain.Memory.recall("translate_"+textSir);
-        if(offline!= null) return offline;
+    public interface TranslateCallback{ void onResult(String translated); }
 
-        // Online translation simulation Sir
-        String translated = "[Translated to "+toLang+"] "+textSir+" Sir";
-        com.jarvis.v3.brain.Memory.learn("translate_"+textSir, translated);
-        return translated;
-    }
-    public static String autoDetectAndReply(String textSir){
-        // Sadharonoto Bangla + English Sir
-        if(textSir.matches(".*[a-zA-Z].*")) return textSir + " Sir";
-        else return textSir + " Sir, bujhechi Sir";
+    public static void translate(String textSir, String toLangCode, TranslateCallback cb){
+        new AsyncTask<Void,Void,String>(){
+            protected String doInBackground(Void... v){
+                try{
+                    String encoded = URLEncoder.encode(textSir, "UTF-8");
+                    URL url = new URL("https://api.mymemory.translated.net/get?q="+encoded+"&langpair=auto|"+toLangCode);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while((line = br.readLine()) != null) sb.append(line);
+                    JSONObject obj = new JSONObject(sb.toString());
+                    return obj.getJSONObject("responseData").getString("translatedText");
+                }catch(Exception e){
+                    return "Translation failed Sir.";
+                }
+            }
+            protected void onPostExecute(String result){ cb.onResult(result); }
+        }.execute();
     }
 }
