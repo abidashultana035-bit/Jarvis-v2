@@ -1,4 +1,4 @@
-name: Build JARVIS v3 Iron
+name: Build JARVIS v2 Iron
 
 on: 
   push:
@@ -31,6 +31,6 @@ jobs:
       - name: Upload JARVIS APK Sir
         uses: actions/upload-artifact@v4
         with:
-          name: JARVIS-v3-Iron-Call-APK-Sir
+          name: JARVIS-v2-Iron-Call-APK-Sir
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: warn
