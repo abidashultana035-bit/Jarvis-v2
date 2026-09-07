@@ -1,4 +1,4 @@
-package com.jarvis.v3.util;
+package com.jarvis.v2.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
