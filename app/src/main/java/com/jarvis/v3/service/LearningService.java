@@ -1,4 +1,4 @@
-package com.jarvis.v3.service;
+package com.jarvis.v2.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
