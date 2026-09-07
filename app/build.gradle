@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.jarvisv3'
+    namespace 'com.example.jarvisv2'
     compileSdk 34
 
     defaultConfig {
-        applicationId 'com.example.jarvisv3'
+        applicationId 'com.example.jarvisv2'
         minSdk 24
         targetSdk 34
         versionCode 1
