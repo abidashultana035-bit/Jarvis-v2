@@ -1,16 +1,21 @@
 package com.jarvis.v3.brain;
+import android.content.Context;
+import com.jarvis.v3.util.NetworkUtils;
+
 public class SelfBrain {
-    public static String answer(String q, BrainCallback cb){
+    public static String answer(Context ctx, String q, BrainCallback cb){
         String offline = Memory.recall(q);
-        if(offline!= null){
-            cb.onAnswer("OFFLINE BRAIN Sir: "+offline);
+        if(offline != null){
+            cb.onAnswer(offline);
             return offline;
         }
-        // If not offline, learn online
-        OnlineLearner.learnFromOnline(q, result -> {
-            cb.onAnswer("ONLINE LEARNING Sir (now saved offline): "+result);
-        });
-        return "Sir ami online theke sikhchi... ektu wait koren Sir...";
+        if(!NetworkUtils.isOnline(ctx)){
+            String msg = "Sorry Sir, but you don't have the data Sir.";
+            cb.onAnswer(msg);
+            return msg;
+        }
+        OnlineLearner.learnFromOnline(q, result -> cb.onAnswer(result));
+        return "One moment Sir, checking online...";
     }
     public interface BrainCallback{ void onAnswer(String ans); }
 }
