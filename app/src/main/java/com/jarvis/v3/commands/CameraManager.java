@@ -1,4 +1,4 @@
-package com.jarvis.v3.commands;
+package com.jarvis.v2.commands;
 public class CameraManager {
     public static boolean needPermissionForUse = true;
     public static String requestCamera(String reasonSir){
