@@ -1,5 +1,5 @@
 package com.jarvis.v2.commands;
-import com.jarvis.v3.brain.Memory;
+import com.jarvis.v2.brain.Memory;
 public class Finder {
     public static String find(String querySir, boolean searchOnlineSir){
         String offline = Memory.recall(querySir);
