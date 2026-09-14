@@ -1,4 +1,4 @@
-package com.jarvis.v3.commands;
+package com.jarvis.v2.commands;
 import com.jarvis.v3.brain.Memory;
 public class Finder {
     public static String find(String querySir, boolean searchOnlineSir){
