@@ -1,4 +1,4 @@
-package com.jarvis.v3.commands;
+package com.jarvis.v2.commands;
 import android.app.admin.DevicePolicyManager; import android.content.Context;
 public class PowerController {
     public static String screenOff(Context ctx){
