@@ -1,4 +1,4 @@
-package com.jarvis.v3.commands;
+package com.jarvis.v2.commands;
 import android.hardware.camera2.CameraManager; import android.content.Context;
 public class TorchController {
     public static void turnOnTorch(Context ctx){
