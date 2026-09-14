@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.*;
 import android.view.Gravity;
 import android.content.Intent;
-import com.jarvis.v3.security.IntruderDetector;
+import com.jarvis.v2.security.IntruderDetector;
 
 public class LockActivity extends Activity {
     SharedPreferences prefs;
