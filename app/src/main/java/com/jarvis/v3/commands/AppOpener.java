@@ -1,4 +1,4 @@
-package com.jarvis.v3.commands;
+package com.jarvis.v2.commands;
 import android.content.Context; import android.content.Intent; import android.content.pm.PackageManager;
 public class AppOpener {
     public static String openApp(Context ctx, String appNameSir){
