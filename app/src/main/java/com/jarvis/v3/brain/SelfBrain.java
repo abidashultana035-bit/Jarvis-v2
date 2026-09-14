@@ -1,6 +1,6 @@
-package com.jarvis.v3.brain;
+package com.jarvis.v2.brain;
 import android.content.Context;
-import com.jarvis.v3.util.NetworkUtils;
+import com.jarvis.v2.util.NetworkUtils;
 
 public class SelfBrain {
     public static String answer(Context ctx, String q, BrainCallback cb){
